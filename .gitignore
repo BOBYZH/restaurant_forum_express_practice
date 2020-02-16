@@ -1,3 +1,6 @@
+upload/
+temp/
+
 # OS X
 .DS_Store*
 Icon?

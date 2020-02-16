@@ -26,7 +26,8 @@ passport.serializeUser((user, cb) => {
 })
 passport.deserializeUser((id, cb) => {
   User.findByPk(id).then(user => {
-    return cb(null, user)
+    // 運用 sequelize instance 本身的 get() 方法來取得純物件
+    return cb(null, user.get())
   })
 })
 

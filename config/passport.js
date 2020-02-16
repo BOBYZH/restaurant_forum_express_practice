@@ -14,7 +14,7 @@ passport.use(new LocalStrategy(
   // 登入認證，cb = 官方文件的done
   (req, username, password, cb) => {
     User.findOne({ where: { email: username } }).then(user => {
-      if (!user) return db(null, false, req.flash('error_messages', 'Incorrect account or password!'))
+      if (!user) return cb(null, false, req.flash('error_messages', 'Incorrect account or password!'))
       if (!bcrypt.compareSync(password, user.password)) return cb(null, false, req.flash('error_messages', 'Incorrect account or password!'))
       return cb(null, user)
     })

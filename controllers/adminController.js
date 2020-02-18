@@ -79,6 +79,8 @@ const adminController = {
         }).then((restaurant) => {
           req.flash('success_messages', 'restaurant was successfully created')
           return res.redirect('/admin/restaurants')
+        }).catch((restaurant) => {
+          req.flash('error_messages', 'unexpected error, try later...')
         })
       })
     } else {
@@ -92,6 +94,8 @@ const adminController = {
       }).then((restaurant) => {
         req.flash('success_messages', 'restaurant was successfully created')
         return res.redirect('/admin/restaurants')
+      }).catch((restaurant) => {
+        req.flash('error_messages', 'unexpected error, try later...')
       })
     }
   },
@@ -178,6 +182,9 @@ const adminController = {
                 req.flash('success_messages', 'restaurant was successfully to update')
                 res.redirect('/admin/restaurants')
               })
+              .catch((restaurant) => {
+                req.flash('error_messages', 'unexpected error, try later...')
+              })
           })
       })
     } else {
@@ -194,6 +201,9 @@ const adminController = {
             .then((restaurant) => {
               req.flash('success_messages', 'restaurant was successfully to update')
               res.redirect('/admin/restaurants')
+            })
+            .catch((restaurant) => {
+              req.flash('error_messages', 'unexpected error, try later...')
             })
         })
     }

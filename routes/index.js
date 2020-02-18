@@ -30,7 +30,6 @@ module.exports = (app, passport) => {
   app.post('/admin/restaurants', authenticatedAdmin, upload.single('image'), adminController.postRestaurant)
 
   app.get('/admin/restaurants/:id', authenticatedAdmin, adminController.getRestaurant)
-
   app.get('/admin/restaurants/:id/edit', authenticatedAdmin, adminController.editRestaurant)
   app.put('/admin/restaurants/:id', authenticatedAdmin, upload.single('image'), adminController.putRestaurant)
 
@@ -41,6 +40,9 @@ module.exports = (app, passport) => {
 
   app.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
   app.post('/admin/categories', authenticatedAdmin, categoryController.postCategory)
+
+  app.get('/admin/categories/:id', authenticatedAdmin, categoryController.getCategories)
+  app.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategory)
 
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)

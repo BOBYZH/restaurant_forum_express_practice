@@ -231,7 +231,7 @@ const adminController = {
           req.flash(
             'success_messages',
             // 'The admin status was successfully to update'
-            `The role of this account is "${status}" now!`
+            `The role of account "${user.email}" is "${status}" now!`
           )
           res.redirect('/admin/users')
         })

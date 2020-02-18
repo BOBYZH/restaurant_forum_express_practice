@@ -3,7 +3,7 @@ const Category = db.Category
 const categoryController = {
   getCategories: (req, res) => {
     return Category.findAll().then(categories => {
-      return res.render('admin/categories', { categories: categories })
+      return res.render('admin/categories', JSON.parse(JSON.stringify({ categories: categories })))
     })
   }
 }

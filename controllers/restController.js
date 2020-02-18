@@ -22,9 +22,9 @@ const restController = {
     return Restaurant.findByPk(req.params.id, {
       include: Category
     }).then(restaurant => {
-      return res.render('restaurant', {
+      return res.render('restaurant', JSON.parse(JSON.stringify({
         restaurant: restaurant
-      })
+      })))
     })
   }
 }

@@ -2,13 +2,15 @@ const fs = require('fs')
 const db = require('../models')
 const Restaurant = db.Restaurant
 const User = db.User
+const Category = db.Category
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const adminController = {
 
   getRestaurants: (req, res) => {
-    return Restaurant.findAll().then(restaurants => {
+    return Restaurant.findAll({ include: [Category] }).then(restaurants => { // include用於載入其他資料表
+      // console.log(restaurants)
       return res.render('admin/restaurants', JSON.parse(JSON.stringify({ restaurants: restaurants })))
     })
   },
@@ -95,7 +97,7 @@ const adminController = {
   },
 
   getRestaurant: (req, res) => {
-    return Restaurant.findByPk(req.params.id).then(restaurant => {
+    return Restaurant.findByPk(req.params.id, { include: [Category] }).then(restaurant => {
       return res.render('admin/restaurant', JSON.parse(JSON.stringify({ restaurant: restaurant })))
     })
   },

@@ -1,7 +1,8 @@
 <h1>餐廳後台</h1>
 
-<a href='/admin/restaurants'>Restaurants</a>|
-<a href='/admin/users'>Users</a>
+<a href='/admin/restaurants'>Restaurants</a>
+|
+<label>Users</label>
 
 <table class="table">
   <thead class="thead-dark">
@@ -26,7 +27,7 @@
       </td>
       <td>
         <form action="/admin/users/{{this.id}}?_method=PUT" method="POST" style="display: inline;">
-          <button type="submit" class="btn btn-link">
+          <button type="submit" class="btn btn-link" onclick="if(confirm('Are you sure to change the role?')) return true; else return false">
             {{#if this.isAdmin}}
             set as user
             {{else}}

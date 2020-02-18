@@ -222,9 +222,16 @@ const adminController = {
         isAdmin: !user.isAdmin
       })
         .then(user => {
+          let status = ''
+          if (user.isAdmin) {
+            status = 'admin'
+          } else {
+            status = 'user'
+          }
           req.flash(
             'success_messages',
-            'The admin status was successfully to update'
+            // 'The admin status was successfully to update'
+            `The role of this account is "${status}" now!`
           )
           res.redirect('/admin/users')
         })

@@ -39,6 +39,7 @@ app.use('/upload', express.static(__dirname + '/upload'))
 
 app.listen(port, () => {
   console.log(`Example app is listening on port ${port}!`)
+  console.log('Enter http://localhost:3000/ if you run this app on your local computer.')
 })
 
 // 路由用到的都要寫在後面括號

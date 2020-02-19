@@ -22,6 +22,11 @@
 <br /><br />
 <h3>所有評論：</h3>
 {{#each restaurant.Comments}}
+{{#if ../user.isAdmin}}
+<form action="/comments/{{this.id}}?_method=DELETE" method="POST" style="float: right;">
+  <button type="submit" class="btn btn-danger" onclick="if(confirm('Are you sure?')) return true; else return false">Delete</button>
+</form>
+{{/if}}
 <blockquote class="blockquote mb-0">
   <h4><a href="/users/{{this.User.id}}">{{this.User.name}}</a></h4>
   <p>{{this.text}}</p>
@@ -39,5 +44,6 @@
   <button type="submit" class="btn btn-primary">Submit</button>
   <a class="float-right" href="javascript:history.back()">回上一頁</a>
 </form>
+
 <br />
 <br />

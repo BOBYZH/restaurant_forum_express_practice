@@ -10,7 +10,7 @@ const adminController = {
 
   getRestaurants: (req, res) => {
     return Restaurant.findAll({ include: [Category] }).then(restaurants => { // include用於載入其他資料表
-      // console.log(restaurants)
+      // console.log(restaurants) // 顯示資料結構用
       return res.render('admin/restaurants', JSON.parse(JSON.stringify({ restaurants: restaurants })))
     })
   },
@@ -18,9 +18,9 @@ const adminController = {
   createRestaurant: (req, res) => {
     // 查詢並傳入類別資料
     Category.findAll().then(categories => {
-      return res.render('admin/create', {
+      return res.render('admin/create', JSON.parse(JSON.stringify({
         categories: categories
-      })
+      })))
     })
   },
 

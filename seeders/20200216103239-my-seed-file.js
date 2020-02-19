@@ -10,21 +10,24 @@ module.exports = {
       isAdmin: true,
       name: 'root',
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      image: faker.image.avatar()
     }, {
       email: 'user1@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       isAdmin: false,
       name: 'user1',
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      image: faker.image.avatar()
     }, {
       email: 'user2@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       isAdmin: false,
       name: 'user2',
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      image: faker.image.avatar()
     }], {})
 
     queryInterface.bulkInsert('Restaurants',
@@ -34,7 +37,7 @@ module.exports = {
           tel: faker.phone.phoneNumber(),
           address: faker.address.streetAddress(),
           opening_hours: '08:00',
-          image: faker.image.imageUrl(),
+          image: faker.image.food(),
           description: faker.lorem.text(),
           createdAt: new Date(),
           updatedAt: new Date(),

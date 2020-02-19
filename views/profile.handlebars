@@ -1,0 +1,16 @@
+<div id="card" class="container mt-5">
+  <div class="row">
+    <div class="col-8 col-md-6 col-lg-4">
+      <img class="rounded-circle" src="{{profile.image}}" alt="avatar" width="300px" height="300px">
+    </div>
+    <div class="card-body col-8 col-md-6 pt-3">
+      <h4 class="card-title">{{profile.name}}</h4>
+      <p>{{profile.email}}</p>
+      <br /><br />
+      {{#ifCond profile.id user.id}}
+      <a href="/users/{{profile.id}}/edit" class="btn btn-primary">Edit</a>
+      {{/ifCond}}
+    </div>
+  </div>
+
+</div>

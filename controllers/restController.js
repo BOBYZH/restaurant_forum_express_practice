@@ -71,6 +71,25 @@ const restController = {
           restaurant: restaurant
         })))
       })
+  },
+
+  getFeeds: (req, res) => { // 前十新的餐廳與評論
+    return Restaurant.findAll({
+      limit: 10,
+      order: [['createdAt', 'DESC']], // 前後優先順序的排序條件
+      include: [Category]
+    }).then(restaurants => {
+      Comment.findAll({
+        limit: 10,
+        order: [['createdAt', 'DESC']],
+        include: [User, Restaurant]
+      }).then(comments => {
+        return res.render('feeds', {
+          restaurants: restaurants,
+          comments: comments
+        })
+      })
+    })
   }
 }
 module.exports = restController

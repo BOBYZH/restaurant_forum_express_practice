@@ -62,10 +62,14 @@ const restController = {
       // .then(
       //   console.log(restaurant.Comments[0].dataValues))
       .then(restaurant => {
-        res.render('restaurant', JSON.parse(JSON.stringify({
+        // res.render('restaurant', JSON.parse(JSON.stringify({
+        //   restaurant: restaurant
+        // })))
+        // return console.log(restaurant.Comments[0].dataValues)
+
+        return res.render('restaurant', JSON.parse(JSON.stringify({
           restaurant: restaurant
         })))
-        return console.log(restaurant.Comments[0].dataValues)
       })
   }
 }

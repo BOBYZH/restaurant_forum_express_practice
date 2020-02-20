@@ -66,10 +66,13 @@ const restController = {
         //   restaurant: restaurant
         // })))
         // return console.log(restaurant.Comments[0].dataValues)
-
-        return res.render('restaurant', JSON.parse(JSON.stringify({
-          restaurant: restaurant
-        })))
+        restaurant.viewCounts += 1 // 此動作代表該餐廳被點擊一次時，計次加一
+        restaurant.save() // 儲存有更新的數值
+          .then(restaurant => {
+            return res.render('restaurant', JSON.parse(JSON.stringify({
+              restaurant: restaurant
+            })))
+          })
       })
   },
 

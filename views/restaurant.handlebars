@@ -3,8 +3,8 @@
     <h1>{{restaurant.name}}</h1>
     <p>[{{restaurant.Category.name}}]</p>
   </div>
-  <div class="col-md-4">
-    <img class="img-responsive center-block" src="{{restaurant.image}}" style="width: 250px;margin-bottom: 25px;">
+  <div class="col-md-5 px-2 py-1 border">
+    <img class="img-responsive center-block p-1" src="{{restaurant.image}}" style="width: 250px;margin-bottom: 25px;">
     <div class="well">
       <ul class="list-unstyled">
         <li><strong>Opening Hour:</strong> {{restaurant.opening_hours}}</li>
@@ -13,8 +13,9 @@
       </ul>
     </div>
   </div>
-  <div class="col-md-8">
+  <div class="col-md-6 border">
     <p>{{restaurant.description}}</p>
+    <a class="btn btn-primary" href="/restaurants/{{restaurant.id}}/dashboard">Dashboard</a>
   </div>
   <hr>
 </div>

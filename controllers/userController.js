@@ -1,8 +1,24 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const Restaurant = db.Restaurant
+const Comment = db.Comment
+
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+
+function getUnique (arr, comp) { // https://reactgo.com/removeduplicateobjects/，去除陣列中重複的物件
+  const unique = arr
+    .map(e => e[comp])
+
+    // store the keys of the unique objects
+    .map((e, i, final) => final.indexOf(e) === i && i)
+
+    // eliminate the dead keys & store unique objects
+    .filter(e => arr[e]).map(e => arr[e])
+
+  return unique
+}
 
 const userController = {
   signUpPage: (req, res) => {
@@ -48,8 +64,20 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    return User.findByPk(req.params.id).then(user => {
-      return res.render('profile', JSON.parse(JSON.stringify({ profile: user })))
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: Comment, include: [Restaurant] }
+      ]
+    }).then(user => {
+      user = JSON.parse(JSON.stringify(user))
+      let commentedRestaurants = []
+      user.Comments.map(comment => {
+        commentedRestaurants.push(comment.Restaurant)
+      })
+      console.log('Original', commentedRestaurants)
+      commentedRestaurants = getUnique(commentedRestaurants, 'id') // 顯示的餐廳不重複
+      console.log('Altered', commentedRestaurants)
+      return res.render('profile', JSON.parse(JSON.stringify({ profile: user, commentedRestaurants })))
     })
   },
 

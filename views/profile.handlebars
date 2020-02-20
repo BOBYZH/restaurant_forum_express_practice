@@ -1,16 +1,25 @@
 <div id="card" class="container mt-5">
-  <div class="row">
-    <div class="col-8 col-md-6 col-lg-4">
-      <img class="rounded-circle" src="{{profile.image}}" alt="avatar" width="300px" height="300px">
+  <div class="row border bg-white">
+    <div class="col-md-6 col-lg-4 p-1 border-right bg-light">
+      <img class="p-1" src="{{profile.image}}" alt="avatar of {{profile.name}}" width="300px" height="300px">
     </div>
-    <div class="card-body col-8 col-md-6 pt-3">
+    <div class="col-md-6 pt-3">
       <h4 class="card-title">{{profile.name}}</h4>
-      <p>{{profile.email}}</p>
-      <br /><br />
+      <p class="pb-5">{{profile.email}}</p>      
       {{#ifCond profile.id user.id}}
-      <a href="/users/{{profile.id}}/edit" class="btn btn-primary">Edit</a>
+      <a href="/users/{{profile.id}}/edit" class="btn btn-primary my-5">Edit</a>
       {{/ifCond}}
     </div>
   </div>
 
+  <div class="card row my-3">
+    <div class="card-header">{{commentedRestaurants.length}} 已評論餐廳</div>
+    <div class="card-body">
+      {{#each commentedRestaurants}}
+      <a href="/restaurants/{{this.id}}">
+        <img src="{{this.image}}" alt="pic of {{this.name}}" title="{{this.Restaurant.name}}"
+          class="mx-2 border" width="70" height="70">
+      </a>
+      {{/each}}
+    </div>
 </div>

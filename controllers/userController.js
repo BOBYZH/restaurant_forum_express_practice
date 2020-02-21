@@ -97,6 +97,9 @@ const userController = {
     if (!req.body.name) {
       req.flash('error_messages', "name didn't exist")
       return res.redirect('back')
+    } else if (Number(req.params.id) !== req.user.id) { // 防止用 POSTMAN 發送 PutUser 的 HTTP請求，這樣還是可以改到別人的資料
+      req.flash('error_messages', '只能改自己的頁面！')
+      res.redirect(`/users/${req.user.id}/edit`)
     }
 
     const { file } = req

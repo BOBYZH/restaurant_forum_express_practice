@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local')
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const Restaurant = db.Restaurant
 
 passport.use(new LocalStrategy(
   // 客製化選項
@@ -22,10 +23,14 @@ passport.use(new LocalStrategy(
 ))
 
 passport.serializeUser((user, cb) => {
-  cb(null, user.id)
+  cb(null, user.id) // cb 對應到官方文件裡的 done, callback done
 })
 passport.deserializeUser((id, cb) => {
-  User.findByPk(id).then(user => {
+  User.findByPk(id, {
+    include: [
+      { model: db.Restaurant, as: 'FavoritedRestaurants' } // 多對多設定的別名
+    ]
+  }).then(user => {
     // 運用 sequelize instance 本身的 get() 方法來取得純物件
     return cb(null, user.get())
   })

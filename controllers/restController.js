@@ -6,6 +6,11 @@ const User = db.User
 const pageLimit = 10
 
 const restController = {
+  redirectInvalidUrl: (req, res) => { // 防止亂打網址
+    req.flash('error_messages', "this page didn't exist!")
+    res.redirect('/restaurants')
+  },
+
   getRestaurants: (req, res) => {
     let offset = 0
     const whereQuery = {}
@@ -37,15 +42,21 @@ const restController = {
           description: r.dataValues.description.substring(0, 50)
         }))
         Category.findAll().then(categories => { // 取出 categories
-          return res.render('restaurants', JSON.parse(JSON.stringify({
-            restaurants: data,
-            categories: categories,
-            categoryId: categoryId,
-            page: page,
-            totalPage: totalPage,
-            prev: prev,
-            next: next
-          })))
+          // console.log('cards', data.length)
+          if (data.length === 0) {
+            req.flash('error_messages', "this category didn't exist!")
+            res.redirect('/restaurants')
+          } else {
+            return res.render('restaurants', JSON.parse(JSON.stringify({
+              restaurants: data,
+              categories: categories,
+              categoryId: categoryId,
+              page: page,
+              totalPage: totalPage,
+              prev: prev,
+              next: next
+            })))
+          }
         })
       })
   },
@@ -66,13 +77,22 @@ const restController = {
         //   restaurant: restaurant
         // })))
         // return console.log(restaurant.Comments[0].dataValues)
-        restaurant.viewCounts += 1 // 此動作代表該餐廳被點擊一次時，計次加一
-        restaurant.save() // 儲存有更新的數值
-          .then(restaurant => {
-            return res.render('restaurant', JSON.parse(JSON.stringify({
-              restaurant: restaurant
-            })))
-          })
+        if (restaurant === null) {
+          req.flash('error_messages', "this restaurant didn't exist!")
+          res.redirect('/restaurants')
+        } else {
+          restaurant.viewCounts += 1 // 此動作代表該餐廳被點擊一次時，計次加一
+          restaurant.save() // 儲存有更新的數值
+            .then(restaurant => {
+              return res.render('restaurant', JSON.parse(JSON.stringify({
+                restaurant: restaurant
+              })))
+            })
+            .catch((restaurant) => {
+              req.flash('error_messages', "this restaurant didn't exist!")
+              res.redirect('/restaurants')
+            })
+        }
       })
   },
 
@@ -102,7 +122,12 @@ const restController = {
         { model: Comment, include: [User] }
       ]
     }).then(restaurant => {
-      return res.render('dashboard', JSON.parse(JSON.stringify({ restaurant: restaurant })))
+      if (restaurant === null) {
+        req.flash('error_messages', "this restaurant didn't exist!")
+        res.redirect('/restaurants')
+      } else {
+        return res.render('dashboard', JSON.parse(JSON.stringify({ restaurant: restaurant })))
+      }
     })
   }
 }

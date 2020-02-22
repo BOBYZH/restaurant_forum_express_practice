@@ -80,6 +80,10 @@ const userController = {
       console.log('Altered', commentedRestaurants)
       return res.render('profile', JSON.parse(JSON.stringify({ profile: user, commentedRestaurants })))
     })
+      .catch((user) => {
+        req.flash('error_messages', "this user didn't exist!")
+        res.redirect('/restaurants')
+      })
   },
 
   editUser: (req, res) => {

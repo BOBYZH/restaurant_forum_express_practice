@@ -61,6 +61,9 @@ module.exports = (app, passport) => {
 
   app.get('/logout', userController.logout)
 
+  app.post('/following/:userId', authenticated, userController.addFollowing)
+  app.delete('/following/:userId', authenticated, userController.removeFollowing)
+
   app.get('/users/top', authenticated, userController.getTopUser) // 放在後面會被視為id而無效
 
   app.get('/users/:id', authenticated, userController.getUser)

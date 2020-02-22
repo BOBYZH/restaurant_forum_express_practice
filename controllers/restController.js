@@ -40,7 +40,8 @@ const restController = {
         底下改用展開運算子 (spread operator) */
           ...r.dataValues, // 想用展開整個實例物件時，如果直接展開第一層是不對的，需要展開的是第二層 dataValues
           description: r.dataValues.description.substring(0, 50),
-          isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(r.id) // map 成 id 清單，之後用 Array 的 includes 方法進行比對，最後會回傳布林值
+          isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(r.id),
+          isLiked: req.user.LikedRestaurants.map(d => d.id).includes(r.id) // map 成 id 清單，之後用 Array 的 includes 方法進行比對，最後會回傳布林值
         }))
         Category.findAll().then(categories => { // 取出 categories
           // console.log('cards', data.length)
@@ -68,6 +69,7 @@ const restController = {
       include: [
         Category,
         { model: User, as: 'FavoritedUsers' },
+        { model: User, as: 'LikedUsers' },
         { model: Comment, include: [User] } // 預先加載( eager loading)載入不同資料來源的寫法
       ]
     })
@@ -75,7 +77,6 @@ const restController = {
       // .then(
       //   console.log(restaurant.Comments[0].dataValues))
       .then(restaurant => {
-        const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
         // res.render('restaurant', JSON.parse(JSON.stringify({
         //   restaurant: restaurant
         // })))
@@ -84,11 +85,13 @@ const restController = {
           req.flash('error_messages', "this restaurant didn't exist!")
           res.redirect('/restaurants')
         } else {
+          const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
+          const isLiked = restaurant.LikedUsers.map(d => d.id).includes(req.user.id)
           restaurant.viewCounts += 1 // 此動作代表該餐廳被點擊一次時，計次加一
           restaurant.save() // 儲存有更新的數值
             .then(restaurant => {
               return res.render('restaurant', JSON.parse(JSON.stringify({
-                restaurant: restaurant, isFavorited: isFavorited
+                restaurant, isFavorited, isLiked // 前後端名稱相同時可省略其一
               })))
             })
             .catch((restaurant) => {

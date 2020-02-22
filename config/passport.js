@@ -28,7 +28,8 @@ passport.serializeUser((user, cb) => {
 passport.deserializeUser((id, cb) => {
   User.findByPk(id, {
     include: [
-      { model: db.Restaurant, as: 'FavoritedRestaurants' } // 多對多設定的別名
+      { model: db.Restaurant, as: 'FavoritedRestaurants' },
+      { model: Restaurant, as: 'LikedRestaurants' } // 多對多設定的別名，皆先載入同使用者資料一起用
     ]
   }).then(user => {
     // 運用 sequelize instance 本身的 get() 方法來取得純物件

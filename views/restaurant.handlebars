@@ -1,9 +1,9 @@
-<div class="row py-5">
+<div class="row py-5 bg-light">
   <div class="col-md-12">
     <h1>{{restaurant.name}}</h1>
     <p>[{{restaurant.Category.name}}]</p>
   </div>
-  <div class="col-md-5 px-2 py-1 border">
+  <div class="col-md-5 px-2 py-1">
     <img class="img-responsive center-block p-1" src="{{restaurant.image}}" style="width: 250px;margin-bottom: 25px;">
     <div class="well">
       <ul class="list-unstyled">
@@ -13,7 +13,7 @@
       </ul>
     </div>
   </div>
-  <div class="col-md-6 border">
+  <div class="col-md-6">
     <p>{{restaurant.description}}</p>
     <a class="btn btn-primary" href="/restaurants/{{restaurant.id}}/dashboard">Dashboard</a>
     {{#if isFavorited }}
@@ -22,6 +22,13 @@
     {{else}}
     <form action="/favorite/{{restaurant.id}}" method="POST" style="display: contents;"><button type="submit"
         class="btn btn-primary" onclick="alert ('{{restaurant.name}}將加入最愛！')">加到最愛</button></form>
+    {{/if}}
+    {{#if isLiked }}
+    <form action="/like/{{restaurant.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit"
+        class="btn btn-danger">Unlike</button></form>
+    {{else}}
+    <form action="/like/{{restaurant.id}}" method="POST" style="display: contents;"><button type="submit"
+        class="btn btn-primary">like</button></form>
     {{/if}}
   </div>
   <hr>

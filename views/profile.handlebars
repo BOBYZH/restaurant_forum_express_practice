@@ -1,25 +1,94 @@
 <div id="card" class="container mt-5">
   <div class="row border bg-white">
-    <div class="col-md-6 col-lg-4 p-1 border-right bg-light">
-      <img class="p-1" src="{{profile.image}}" alt="avatar of {{profile.name}}" width="300px" height="300px">
+    <div class="col-md-6 col-lg-4 py-3">
+      <img src="{{profile.image}}" alt="avatar of {{profile.name}}" width="300px" height="300px">
     </div>
     <div class="col-md-6 pt-3">
       <h4 class="card-title">{{profile.name}}</h4>
-      <p class="pb-5">{{profile.email}}</p>      
+      <p>{{profile.email}}</p>
+      <ul class="list-unstyled list-inline">
+        <li><strong>{{commentedRestaurants.length}}</strong> 已評論餐廳</li>
+        <li><strong>{{profile.FavoritedRestaurants.length}}</strong> 收藏的餐廳</li>
+        <li><strong>{{profile.Followings.length}}</strong> Followings (追蹤者)</li>
+        <li><strong>{{profile.Followers.length}}</strong> Followers (追隨者)<uil>
+      </ul>      
+
       {{#ifCond profile.id user.id}}
-      <a href="/users/{{profile.id}}/edit" class="btn btn-primary my-5">Edit</a>
+      <a href="/users/{{profile.id}}/edit" class="btn btn-primary my-2">Edit</a>
+      {{else}}
+      {{#if this.isFollowed }}
+      <form action="/following/{{profile.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit"
+          class="btn btn-danger ml-5">取消追蹤</button></form>
+      {{else}}
+      <form action="/following/{{profile.id}}" method="POST" style="display: contents;"><button type="submit"
+          class="btn btn-primary ml-5">追蹤</button></form>
+      {{/if}}
       {{/ifCond}}
     </div>
   </div>
 
-  <div class="card row my-3">
-    <div class="card-header">{{commentedRestaurants.length}} 已評論餐廳</div>
-    <div class="card-body">
-      {{#each commentedRestaurants}}
-      <a href="/restaurants/{{this.id}}">
-        <img src="{{this.image}}" alt="pic of {{this.name}}" title="{{this.Restaurant.name}}"
-          class="mx-2 border" width="70" height="70">
-      </a>
-      {{/each}}
+  <div class="row">
+    <div class="col-md-4 mt-2 pl-0">
+      <div class="card mb-3">
+        <div class="card-header">{{profile.Followings.length}} Followings (追蹤者)</div>
+        <div class="card-body row">
+          {{#each profile.Followings}}
+          <a href="/users/{{this.id}}">
+            {{#if this.image}}
+            <img src="{{this.image}}" alt="{{this.name}}" title="{{this.name}}" class="mx-1 my-2 border" width="70" height="70">
+            {{else}}
+            <img src=" https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png" class="mx-1 my-2 border" width="70" height="70">
+            {{/if}}
+          </a>
+          {{/each}}
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header">{{commentedRestaurants.length}} 已評論餐廳</div>
+        <div class="card-body">
+          {{#each commentedRestaurants}}
+          <a href="/restaurants/{{this.id}}">
+            {{#if this.image}}
+            <img src="{{this.image}}" alt="{{this.name}}" title="{{this.restaurant.name}}" class="mx-1 my-2 border" width="70" height="70">
+            {{else}}
+            <img src=" https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png" class="mx-1 my-2 border" width="70" height="70">
+            {{/if}}
+          </a>
+          {{/each}}
+        </div>  
+      </div>
     </div>
+      
+    <div class="col-md-8 mt-2 pr-0">
+      <div class="card mb-3">
+        <div class="card-header">{{profile.Followers.length}} Followers (追蹤者)</div>
+        <div class="card-body">
+          {{#each profile.Followers}}
+          <a href="/users/{{this.id}}">
+            {{#if this.image}}
+            <img src="{{this.image}}" alt="{{this.name}}" title="{{this.name}}" class="mx-1 my-2 border" width="70" height="70">
+            {{else}}
+            <img src=" https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png" class="mx-1 my-2 border" width="70" height="70">
+            {{/if}}
+          </a>
+          {{/each}}
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header">{{profile.FavoritedRestaurants.length}}收藏的餐廳</div>
+        <div class="card-body">
+          {{#each profile.FavoritedRestaurants}}
+          <a href="/restaurants/{{this.id}}">
+            {{#if this.image}}
+            <img src="{{this.image}}" alt="{{this.name}}" title="{{this.name}}" class="mx-1 my-2 border" width="70" height="70">
+            {{else}}
+            <img src=" https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png" class="mx-1 my-2 border" width="70" height="70">
+            {{/if}}
+          </a>
+          {{/each}}
+        </div>
+      </div>  
+    </div>      
 </div>

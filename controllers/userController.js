@@ -69,7 +69,10 @@ const userController = {
   getUser: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
-        { model: Comment, include: [Restaurant] }
+        { model: Comment, include: [Restaurant] },
+        { model: Restaurant, as: 'FavoritedRestaurants' },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
       ]
     }).then(user => {
       user = JSON.parse(JSON.stringify(user))
@@ -77,10 +80,12 @@ const userController = {
       user.Comments.map(comment => {
         commentedRestaurants.push(comment.Restaurant)
       })
-      console.log('Original', commentedRestaurants)
-      commentedRestaurants = getUnique(commentedRestaurants, 'id') // 顯示的餐廳不重複
-      console.log('Altered', commentedRestaurants)
-      return res.render('profile', JSON.parse(JSON.stringify({ profile: user, commentedRestaurants })))
+      // console.log('Original', commentedRestaurants)
+      commentedRestaurants = getUnique(commentedRestaurants, 'id') // 顯示的餐廳不重複，見上方函式
+      // console.log('Altered', commentedRestaurants)
+      // console.log('test', user)
+      const isFollowed = req.user.Followings.map(d => d.id).includes(user.id)
+      return res.render('profile', JSON.parse(JSON.stringify({ profile: user, commentedRestaurants, isFollowed })))
     })
       .catch((user) => {
         req.flash('error_messages', "this user didn't exist!")

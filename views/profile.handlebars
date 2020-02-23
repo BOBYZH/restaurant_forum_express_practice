@@ -27,11 +27,11 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-4 mt-2 pl-0">
+  <div class="row mt-2">
+    <div class="col-md-4 mt-2 px-0 pr-md-1">
       <div class="card mb-3">
         <div class="card-header">{{profile.Followings.length}} Followings (追蹤者)</div>
-        <div class="card-body row">
+        <div class="card-body">
           {{#each profile.Followings}}
           <a href="/users/{{this.id}}">
             {{#if this.image}}
@@ -45,31 +45,35 @@
       </div>
 
       <div class="card mb-3">
-        <div class="card-header">{{commentedRestaurants.length}} 已評論餐廳</div>
-        <div class="card-body">
-          {{#each commentedRestaurants}}
-          <a href="/restaurants/{{this.id}}">
-            {{#if this.image}}
-            <img src="{{this.image}}" alt="{{this.name}}" title="{{this.restaurant.name}}" class="mx-1 my-2 border" width="70" height="70">
-            {{else}}
-            <img src=" https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png" class="mx-1 my-2 border" width="70" height="70">
-            {{/if}}
-          </a>
-          {{/each}}
-        </div>  
-      </div>
-    </div>
-      
-    <div class="col-md-8 mt-2 pr-0">
-      <div class="card mb-3">
         <div class="card-header">{{profile.Followers.length}} Followers (追蹤者)</div>
         <div class="card-body">
           {{#each profile.Followers}}
           <a href="/users/{{this.id}}">
             {{#if this.image}}
-            <img src="{{this.image}}" alt="{{this.name}}" title="{{this.name}}" class="mx-1 my-2 border" width="70" height="70">
+            <img src="{{this.image}}" alt="{{this.name}}" title="{{this.name}}" class="mx-1 my-2 border" width="70"
+              height="70">
             {{else}}
-            <img src=" https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png" class="mx-1 my-2 border" width="70" height="70">
+            <img src=" https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png" class="mx-1 my-2 border"
+              width="70" height="70">
+            {{/if}}
+          </a>
+          {{/each}}
+        </div>
+      </div>      
+    </div>
+      
+    <div class="col-md-8 mt-2 px-0 pl-md-2">
+      <div class="card mb-3">
+        <div class="card-header">{{commentedRestaurants.length}} 已評論餐廳</div>
+        <div class="card-body">
+          {{#each commentedRestaurants}}
+          <a href="/restaurants/{{this.id}}">
+            {{#if this.image}}
+            <img src="{{this.image}}" alt="{{this.name}}" title="{{this.restaurant.name}}" class="mx-1 my-2 border" width="70"
+              height="70">
+            {{else}}
+            <img src=" https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png" class="mx-1 my-2 border"
+              width="70" height="70">
             {{/if}}
           </a>
           {{/each}}

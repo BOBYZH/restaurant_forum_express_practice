@@ -22,8 +22,13 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
   app.get('/', authenticated, (req, res) => res.redirect('/restaurants'))
+
   app.get('/restaurants', authenticated, restController.getRestaurants)
-  app.get('/restaurants/feeds', authenticated, restController.getFeeds) // 放在後面會被視為id而無效
+
+  // 放在後面會被視為id而無效
+  app.get('/restaurants/feeds', authenticated, restController.getFeeds)
+  app.get('/restaurants/top', authenticated, restController.getTopRestaurants)
+
   app.get('/restaurants/:id', authenticated, restController.getRestaurant)
   app.get('/restaurants/:id/dashboard', authenticated, restController.getDashboard)
 

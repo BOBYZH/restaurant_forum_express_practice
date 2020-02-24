@@ -45,5 +45,5 @@ app.listen(port, () => {
   console.log('Enter http://localhost:3000/ if you run this app on your local computer.')
 })
 
-// 路由用到的都要寫在後面括號
-require('./routes')(app, passport)
+// 路由用到的都要寫在後面括號，因為路由分了兩層，所以 index.js 不需要用到 passport 了
+require('./routes')(app)

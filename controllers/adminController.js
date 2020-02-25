@@ -6,12 +6,11 @@ const Category = db.Category
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
+const adminService = require('../services/adminService.js')
 const adminController = {
-
   getRestaurants: (req, res) => {
-    return Restaurant.findAll({ include: [Category] }).then(restaurants => { // include用於載入其他資料表
-      // console.log(restaurants) // 顯示資料結構用
-      return res.render('admin/restaurants', JSON.parse(JSON.stringify({ restaurants: restaurants })))
+    adminService.getRestaurants(req, res, (data) => {
+      return res.render('admin/restaurants', JSON.parse(JSON.stringify(data)))
     })
   },
 

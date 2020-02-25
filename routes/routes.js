@@ -12,6 +12,13 @@ const commentController = require('../controllers/commentController.js')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
+const unAuthenticated = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    return next()
+  }
+  res.redirect('/restaurants')
+}
+
 const authenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next()
@@ -67,8 +74,8 @@ router.delete('/comments/:id', authenticatedAdmin, commentController.deleteComme
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 
-router.get('/signin', userController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+router.get('/signin', unAuthenticated, userController.signInPage)
+router.post('/signin', unAuthenticated, passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 
 router.get('/logout', userController.logout)
 

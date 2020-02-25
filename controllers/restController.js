@@ -143,7 +143,7 @@ const restController = {
         { model: User, as: 'FavoritedUsers' }
       ]
     }).then(restaurants => {
-      console.log(restaurants)
+      // console.log(restaurants)
       restaurants = restaurants.map(r => ({
         ...r.dataValues,
         description: r.description.substring(0, 50),
@@ -151,6 +151,7 @@ const restController = {
         isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(r.id)
       }))
       restaurants = restaurants.sort((a, b) => b.FavoritedCount - a.FavoritedCount).slice(0, 10)
+      restaurants = restaurants.filter(restaurant => restaurant.FavoritedCount > 0) // 只看到真的有人收藏的餐廳，不看到 0 人收藏的
       return res.render('topRestaurants', { restaurants })
     })
   }

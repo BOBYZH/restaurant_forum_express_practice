@@ -28,7 +28,7 @@ passport.serializeUser((user, cb) => {
 passport.deserializeUser((id, cb) => {
   User.findByPk(id, {
     include: [ // 多對多設定的別名，皆先載入同使用者資料一起用
-      { model: db.Restaurant, as: 'FavoritedRestaurants' },
+      { model: Restaurant, as: 'FavoritedRestaurants' },
       { model: Restaurant, as: 'LikedRestaurants' },
       { model: User, as: 'Followers' },
       { model: User, as: 'Followings' }

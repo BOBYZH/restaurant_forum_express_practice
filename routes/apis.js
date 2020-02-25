@@ -4,7 +4,7 @@ const router = express.Router()
 // const restController = require('../controllers/restController.js')
 const adminController = require('../controllers/api/adminController.js')
 // const userController = require('../controllers/userController.js')
-// const categoryController = require('../controllers/categoryController.js')
+const categoryController = require('../controllers/api/categoryController.js')
 // const commentController = require('../controllers/commentController.js')
 
 // router.get('/restaurants', authenticated, restController.getRestaurants)
@@ -21,7 +21,7 @@ router.get('/admin/restaurants/:id', adminController.getRestaurant)
 
 // router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
-// router.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
+router.get('/admin/categories', categoryController.getCategories)
 
 // router.get('/admin/categories/:id', authenticatedAdmin, categoryController.getCategories)
 

@@ -8,6 +8,11 @@ const adminService = {
       // console.log(restaurants) // 顯示資料結構用
       callback({ restaurants: restaurants })
     })
+  },
+  getRestaurant: (req, res, callback) => {
+    return Restaurant.findByPk(req.params.id, { include: [Category] }).then(restaurant => {
+      callback({ restaurant: restaurant })
+    })
   }
 }
 module.exports = adminService

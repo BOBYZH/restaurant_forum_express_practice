@@ -6,7 +6,7 @@ const upload = multer({ dest: 'temp/' })
 
 // const restController = require('../controllers/restController.js')
 const adminController = require('../controllers/api/adminController.js')
-// const userController = require('../controllers/userController.js')
+const userController = require('../controllers/api/userController.js')
 const categoryController = require('../controllers/api/categoryController.js')
 // const commentController = require('../controllers/commentController.js')
 
@@ -31,6 +31,9 @@ router.get('/admin/categories', categoryController.getCategories)
 router.post('/admin/categories', categoryController.postCategory)
 router.put('/admin/categories/:id', categoryController.putCategory)
 router.delete('/admin/categories/:id', categoryController.deleteCategory)
+
+// JWT signin
+router.post('/signin', userController.signIn)
 
 // router.get('/users/top', authenticated, userController.getTopUser) // 放在後面會被視為id而無效
 

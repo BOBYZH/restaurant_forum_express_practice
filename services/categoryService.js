@@ -7,7 +7,13 @@ const categoryService = {
       if (req.params.id) {
         Category.findByPk(req.params.id)
           .then((category) => {
-            return res.render('admin/categories', JSON.parse(JSON.stringify({ categories: categories, category: category })))
+            // console.log('test', category)
+            if (category === null) {
+              req.flash('error_messages', "category didn't exist")
+              res.redirect('/admin/categories')
+            } else {
+              return res.render('admin/categories', JSON.parse(JSON.stringify({ categories: categories, category: category })))
+            }
           })
       } else {
         callback({ categories: categories })

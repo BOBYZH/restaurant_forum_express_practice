@@ -45,7 +45,8 @@ router.post('/admin/categories', authenticated, authenticatedAdmin, categoryCont
 router.put('/admin/categories/:id', authenticated, authenticatedAdmin, categoryController.putCategory)
 router.delete('/admin/categories/:id', authenticated, authenticatedAdmin, categoryController.deleteCategory)
 
-// JWT signin
+// JWT sign
+router.post('/signup', userController.signUp)
 router.post('/signin', userController.signIn)
 
 // router.get('/users/top', authenticated, userController.getTopUser) // 放在後面會被視為id而無效

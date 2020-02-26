@@ -1,4 +1,8 @@
 const adminService = require('../services/adminService.js')
+const db = require('../models')
+const Category = db.Category
+const Restaurant = db.Restaurant
+
 const adminController = {
   getRestaurants: (req, res) => {
     adminService.getRestaurants(req, res, (data) => {
@@ -40,8 +44,8 @@ const adminController = {
   },
 
   editRestaurant: (req, res) => {
-    return Restaurant.findByPk(req.params.id).then(restaurant => {
-      Category.findAll().then(categories => {
+    Category.findAll().then(categories => {
+      return Restaurant.findByPk(req.params.id).then(restaurant => {
         if (!restaurant) {
           req.flash('error_messages', "restaurant didn't exist")
           res.redirect('/admin/restaurants')

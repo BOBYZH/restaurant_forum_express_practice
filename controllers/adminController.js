@@ -1,11 +1,3 @@
-const fs = require('fs')
-const db = require('../models')
-const Restaurant = db.Restaurant
-const User = db.User
-const Category = db.Category
-const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
-
 const adminService = require('../services/adminService.js')
 const adminController = {
   getRestaurants: (req, res) => {
@@ -83,33 +75,15 @@ const adminController = {
   },
 
   getUsers: (req, res) => {
-    return User.findAll().then(users => {
-      return res.render(
-        'admin/users',
-        JSON.parse(JSON.stringify({ users: users }))
-      )
+    adminService.getUsers(req, res, (data) => {
+      return res.render('admin/users', JSON.parse(JSON.stringify(data)))
     })
   },
 
   putUsers: (req, res) => {
-    return User.findByPk(req.params.id).then(user => {
-      user.update({
-        isAdmin: !user.isAdmin
-      })
-        .then(user => {
-          let status = ''
-          if (user.isAdmin) {
-            status = 'admin'
-          } else {
-            status = 'user'
-          }
-          req.flash(
-            'success_messages',
-            // 'The admin status was successfully to update'
-            `The role of account "${user.email}" is "${status}" now!`
-          )
-          res.redirect('/admin/users')
-        })
+    adminService.putUsers(req, res, (data) => {
+      req.flash('success_messages', data.message)
+      return res.redirect('/admin/users')
     })
   }
 }

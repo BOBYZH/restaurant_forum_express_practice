@@ -1,6 +1,7 @@
 const db = require('../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
+const User = db.User
 
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -115,6 +116,33 @@ const adminService = {
               callback({ status: 'success', message: '' })
             })
         }
+      })
+  },
+  getUsers: (req, res, callback) => {
+    return User.findAll().then(users => {
+      callback({ users: users })
+    })
+  },
+  putUsers: (req, res, callback) => {
+    return User.findByPk(req.params.id)
+      .then((user) => {
+        user.update({
+          // isAdmin: req.body.isAdmin === 'true'
+          isAdmin: !user.isAdmin // 由於新版只能刪除管理員權限，故改回舊版，不懂新版程式碼的功能？
+        })
+          .then((restaurant) => {
+            let status = ''
+            if (user.isAdmin) {
+              status = 'admin'
+            } else {
+              status = 'user'
+            }
+            callback({
+              status: 'success',
+              // message: 'user was successfully to update'
+              message: `The role of ${user.name} is "${status}" now!`
+            })
+          })
       })
   }
 }

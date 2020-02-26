@@ -42,6 +42,19 @@ const categoryService = {
           }
         })
     }
+  },
+  deleteCategory: (req, res, callback) => {
+    return Category.findByPk(req.params.id)
+      .then((category) => {
+        if (!category) {
+          return callback({ status: 'error', message: "category didn't exist" })
+        } else {
+          category.destroy()
+            .then((category) => {
+              callback({ status: 'success', message: '' })
+            })
+        }
+      })
   }
 }
 module.exports = categoryService

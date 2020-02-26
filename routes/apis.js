@@ -30,8 +30,7 @@ router.delete('/admin/restaurants/:id', adminController.deleteRestaurant)
 router.get('/admin/categories', categoryController.getCategories)
 router.post('/admin/categories', categoryController.postCategory)
 router.put('/admin/categories/:id', categoryController.putCategory)
-
-// router.get('/admin/categories/:id', authenticatedAdmin, categoryController.getCategories)
+router.delete('/admin/categories/:id', categoryController.deleteCategory)
 
 // router.get('/users/top', authenticated, userController.getTopUser) // 放在後面會被視為id而無效
 

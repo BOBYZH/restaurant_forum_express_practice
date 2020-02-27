@@ -2,8 +2,8 @@ const restService = require('../services/restService.js')
 
 const restController = {
   redirectInvalidUrl: (req, res) => { // 防止亂打網址
-    req.flash('error_messages', "this page didn't exist!")
-    res.redirect('/restaurants')
+    // req.flash('error_messages', "this page didn't exist!") // 有時會莫名出現...
+    res.redirect('back')
   },
 
   getRestaurants: (req, res) => {

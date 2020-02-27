@@ -19,7 +19,12 @@ const restController = {
 
   getRestaurant: (req, res) => {
     restService.getRestaurant(req, res, (data) => {
-      return res.render('restaurant', JSON.parse(JSON.stringify(data)))
+      if (data.status === 'error') {
+        req.flash('error_messages', data.message)
+        res.redirect('/restaurants')
+      } else {
+        return res.render('restaurant', JSON.parse(JSON.stringify(data)))
+      }
     })
   },
 
@@ -31,8 +36,8 @@ const restController = {
 
   getDashboard: (req, res) => {
     restService.getDashboard(req, res, (data) => {
-      if (data === null) {
-        req.flash('error_messages', "this restaurant didn't exist!")
+      if (data.status === 'error') {
+        req.flash('error_messages', data.message)
         res.redirect('/restaurants')
       } else {
         return res.render('dashboard', JSON.parse(JSON.stringify(data)))

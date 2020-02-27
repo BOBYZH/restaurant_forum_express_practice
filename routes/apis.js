@@ -21,7 +21,7 @@ const restController = require('../controllers/api/restController.js')
 const adminController = require('../controllers/api/adminController.js')
 const userController = require('../controllers/api/userController.js')
 const categoryController = require('../controllers/api/categoryController.js')
-// const commentController = require('../controllers/commentController.js')
+const commentController = require('../controllers/api/commentController.js')
 
 router.get('/', authenticated, (req, res) => res.redirect('/api/restaurants'))
 router.get('/restaurants', authenticated, restController.getRestaurants)
@@ -64,5 +64,8 @@ router.delete('/like/:restaurantId', authenticated, userController.removeLike)
 
 router.post('/following/:userId', authenticated, userController.addFollowing)
 router.delete('/following/:userId', authenticated, userController.removeFollowing)
+
+router.post('/comments', authenticated, commentController.postComment)
+router.delete('/comments/:id', authenticated, authenticatedAdmin, commentController.deleteComment)
 
 module.exports = router

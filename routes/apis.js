@@ -51,8 +51,18 @@ router.delete('/admin/categories/:id', authenticated, authenticatedAdmin, catego
 router.post('/signup', userController.signUp)
 router.post('/signin', userController.signIn)
 
-// router.get('/users/top', authenticated, userController.getTopUser) // 放在後面會被視為id而無效
+router.get('/users/top', authenticated, userController.getTopUser) // 放在後面會被視為id而無效
 
-// router.get('/users/:id', authenticated, userController.getUser)
+router.get('/users/:id', authenticated, userController.getUser)
+router.put('/users/:id', authenticated, upload.single('image'), userController.putUser)
+
+router.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
+router.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)
+
+router.post('/like/:restaurantId', authenticated, userController.addLike)
+router.delete('/like/:restaurantId', authenticated, userController.removeLike)
+
+router.post('/following/:userId', authenticated, userController.addFollowing)
+router.delete('/following/:userId', authenticated, userController.removeFollowing)
 
 module.exports = router

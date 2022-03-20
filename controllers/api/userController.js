@@ -44,8 +44,8 @@ const userController = {
         return res.status(401).json({ status: 'error', message: 'passwords did not match' })
       }
       // 簽發 token
-      var payload = { id: user.id }
-      var token = jwt.sign(payload, process.env.JWT_SECRET) // 密鑰
+      const payload = { id: user.id }
+      const token = jwt.sign(payload, process.env.JWT_SECRET) // 密鑰
       return res.json({
         status: 'success',
         message: 'ok',

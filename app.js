@@ -6,7 +6,7 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 const passport = require('./config/passport') // 或調整順序到dotenv底下，讓 config/passport.js 吃到 .env 裡的設定
-const cors = require("cors");
+const cors = require('cors')
 
 const app = express()
 const port = process.env.PORT || 3000
